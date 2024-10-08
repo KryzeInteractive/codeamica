@@ -1,7 +1,16 @@
+"use client";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 
 import { SignoutButton } from "./SignoutButton";
+
 export default function Navbar() {
+  const { data: session } = useSession();
+  console.log(session);
+  if (session === null || session === undefined) {
+    console.log("not log in yet");
+  }
+
   return (
     <div>
       <nav className="border-gray-200 bg-white dark:bg-gray-900">
