@@ -1,6 +1,16 @@
+"use client";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
+
+import { SignoutButton } from "./SignoutButton";
 
 export default function Navbar() {
+  const { data: session } = useSession();
+  console.log(session);
+  if (session === null || session === undefined) {
+    console.log("not log in yet");
+  }
+
   return (
     <div>
       <nav className="border-gray-200 bg-white dark:bg-gray-900">
@@ -39,7 +49,7 @@ export default function Navbar() {
               <path
                 stroke="currentColor"
                 strokeLinecap="round"
-                stroke-linejoin="round"
+                strokeLinejoin="round"
                 strokeWidth="2"
                 d="M1 1h15M1 7h15M1 13h15"
               />
@@ -64,6 +74,25 @@ export default function Navbar() {
                 >
                   Courses
                 </Link>
+              </li>
+              <li>
+                <Link
+                  href="/pages/login"
+                  className="block rounded px-3 py-2 text-gray-900 hover:bg-gray-100 md:border-0 md:p-0 md:hover:bg-transparent md:hover:text-blue-700 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent md:dark:hover:text-blue-500"
+                >
+                  Log in
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/pages/signup"
+                  className="block rounded px-3 py-2 text-gray-900 hover:bg-gray-100 md:border-0 md:p-0 md:hover:bg-transparent md:hover:text-blue-700 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent md:dark:hover:text-blue-500"
+                >
+                  Sign up
+                </Link>
+              </li>
+              <li>
+                <SignoutButton />
               </li>
             </ul>
           </div>
