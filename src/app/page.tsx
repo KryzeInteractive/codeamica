@@ -14,10 +14,10 @@ export default function Home() {
       <main>
         <div className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 text-white">
           {/* Animated Background */}
-          <div
+          {/* <div
             className="absolute inset-0 z-0 animate-pulse bg-cover bg-center opacity-40"
             style={{ backgroundImage: "url(/path/to/your-image.jpg)" }}
-          ></div>
+          ></div> */}
 
           {/* Logo and Title */}
           <div
@@ -44,9 +44,9 @@ export default function Home() {
           >
             <Link
               className="rounded-full bg-white px-8 py-3 font-semibold text-blue-500 transition-all duration-300 hover:bg-gray-200"
-              href="/pages/courses"
+              href="/pages/learningPath"
             >
-              Explore Courses
+              Explore learning paths
             </Link>
           </div>
         </div>
