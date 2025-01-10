@@ -12,7 +12,7 @@ const filterData = [
     options: ["Course", "Learning Path"],
   },
   {
-    category: "duration",
+    category: "estimatedHours",
     name: "Time to complete",
     options: ["All", "5-10 hours", "10-20 hours", "20-60 hours", "60+ hours"],
   },
@@ -37,39 +37,41 @@ export default function Filter({
       };
     });
   };
-
+  console.log(filter)
   return (
-    <div className="flex h-fit w-full flex-col gap-4 rounded-[5px] border-[1px] border-black p-6">
-      <section className="flex items-center gap-2">
-        <button
-          className="flex h-fit items-center justify-center gap-2 rounded-[5px] border-[1px] border-[var(--primary-text-color)] px-2 py-1.5"
-          onClick={onFilter}
-        >
-          <img
-            width="20"
-            height="20"
-            src="/assets/filter.svg"
-            alt="filter-icon"
-          />
-          <span className="font-bold">Filter</span>
-        </button>
-        <button className="cursor-pointer px-2" onClick={onClear}>
-          Clear
-        </button>
-      </section>
-      {filterData.map((data, index) => {
-        return (
-          <FilterCategory
-            key={index}
-            category={data.category}
-            name={data.name}
-            options={data.options}
-            pickedOptions={filter[data.category]}
-            handleCheck={handleCheck}
-          />
-        );
-      })}
-    </div>
+    filter && (
+      <div className="flex h-fit w-full flex-col gap-4 rounded-[5px] border-[1px] border-black p-6">
+        <section className="flex items-center gap-2">
+          <button
+            className="flex h-fit items-center justify-center gap-2 rounded-[5px] border-[1px] border-[var(--primary-text-color)] px-2 py-1.5"
+            onClick={onFilter}
+          >
+            <img
+              width="20"
+              height="20"
+              src="/assets/filter.svg"
+              alt="filter-icon"
+            />
+            <span className="font-bold">Filter</span>
+          </button>
+          <button className="cursor-pointer px-2" onClick={onClear}>
+            Clear
+          </button>
+        </section>
+        {filterData.map((data, index) => {
+          return (
+            <FilterCategory
+              key={index}
+              category={data.category}
+              name={data.name}
+              options={data.options}
+              pickedOptions={filter[data.category]}
+              handleCheck={handleCheck}
+            />
+          );
+        })}
+      </div>
+    )
   );
 }
 

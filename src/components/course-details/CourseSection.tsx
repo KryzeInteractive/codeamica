@@ -1,4 +1,5 @@
 import { CourseDetail } from "../../routes/courses/$courseId";
+import { Course, LearningPath } from "../../types";
 import CourseBanner from "../ui/CourseBanner";
 import { EnrollButton, ResumeButton } from "../ui/CourseDetailButton";
 
@@ -7,7 +8,7 @@ export default function CourseSection({
   hasEnrolled,
   setEnrollment,
 }: {
-  course: CourseDetail;
+  course: Course | LearningPath
   hasEnrolled: boolean;
   setEnrollment: React.Dispatch<React.SetStateAction<boolean>>;
 }) {

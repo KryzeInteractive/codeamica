@@ -1,12 +1,13 @@
+import { useNavigate } from "@tanstack/react-router";
 import clsx from "clsx"
 
 export interface CourseCardProps {
-    id: number,
+    id: string,
     type: "Course" | "Learning Path",  //Assuming these are the names of the types
     level?: "Beginner" | "Intermediate" | "Advanced",
     title: string,
     description: string,
-    duration: string
+    estimatedHours: number
 }
 
 //Utility function
@@ -18,9 +19,16 @@ const limitTextLength = (text: string, numberOfCharacter: number) => {
 
 const maxNumberOfChars = 86;
 
-export default function CourseCard({id, type, level, title, description, duration }: CourseCardProps) {
+export default function CourseCard({id, type, level, title, description, estimatedHours }: CourseCardProps) {
+    const navigate = useNavigate();
+    // console.log(id)
     return (
-      <div className="relative flex h-card w-card shrink-0 cursor-pointer flex-col justify-between overflow-hidden rounded-[5px] border border-black bg-[var(--background)]">
+      <div className="relative flex h-card w-card shrink-0 cursor-pointer flex-col justify-between overflow-hidden rounded-[5px] border border-black bg-[var(--background)]"
+      onClick={() => {
+        navigate({
+          to: `/courses/${id}`
+        })
+      }}>
         <div
           className={clsx(
             "h-10 w-full items-center border-b border-black px-6 py-2 leading-card",
@@ -56,7 +64,7 @@ export default function CourseCard({id, type, level, title, description, duratio
           )}
         >
           {level && <p>{level}</p>}
-          <p>{duration}</p>
+          <p>{estimatedHours} {estimatedHours > 1 ? "hours" : "hour"}</p>
         </footer>
       </div>
     );

@@ -7,7 +7,9 @@ import {
   ResumeButton,
 } from "../../components/ui/CourseDetailButton";
 import ProgressBar from "../../components/ui/ProgressBar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Course, LearningPath } from "../../types";
+import api from "../../axios";
 
 export interface CourseDetail {
   id: number;
@@ -15,10 +17,10 @@ export interface CourseDetail {
   level?: "Beginner" | "Intermediate" | "Advanced";
   title: string;
   description: string;
-  duration: string;
-  hasPrequisites: boolean;
+  estimatedHours: number;
+  prequisites: boolean;
   extraInfo?: string;
-  skills: string[];
+  whatYouWillLearn: string[];
   sections: CourseSection[];
 }
 
@@ -26,119 +28,136 @@ export interface CourseSection {
   title: string;
   description: string;
   lessons: any[];
-  quizzes: any[];
-  exercises: any[];
+  quizzes?: any[];
+  exercises?: any[];
 }
 
 //Mock course data
-const mockCourse: CourseDetail = {
-  id: 0,
-  type: "Course",
-  title: "Responsive Web Design Essentials: HTML, CSS & JavaScript",
-  level: "Intermediate",
-  description:
-    "Master the core skills needed to design visually appealing, responsive websites. This course covers HTML, CSS, and JavaScript fundamentals with a focus on modern, mobile-friendly design principles. You'll build practical projects along the way, learning to create layouts that look great on any device, with guidance on CSS Flexbox, Grid, and essential JavaScript for interactivity.",
-  duration: "50 hours",
-  hasPrequisites: false,
-  skills: [
-    "Build clean, semantic HTML5 markup to create accessible and SEO-friendly content.",
-    "Understand the core concepts of JavaScript, including variables, data types, operators, and control structures.",
-    "Implement fluid layouts and scalable images to maintain a visually appealing design on different devices.",
-    "Explore advanced styling techniques, including typography, animations, transitions, and shadows.",
-  ],
-  sections: [],
-};
+// const mockCourse: CourseDetail = {
+//   id: 0,
+//   type: "Course",
+//   title: "Responsive Web Design Essentials: HTML, CSS & JavaScript",
+//   level: "Intermediate",
+//   description:
+//     "Master the core skills needed to design visually appealing, responsive websites. This course covers HTML, CSS, and JavaScript fundamentals with a focus on modern, mobile-friendly design principles. You'll build practical projects along the way, learning to create layouts that look great on any device, with guidance on CSS Flexbox, Grid, and essential JavaScript for interactivity.",
+//   duration: "50 hours",
+//   hasPrequisites: false,
+//   skills: [
+//     "Build clean, semantic HTML5 markup to create accessible and SEO-friendly content.",
+//     "Understand the core concepts of JavaScript, including variables, data types, operators, and control structures.",
+//     "Implement fluid layouts and scalable images to maintain a visually appealing design on different devices.",
+//     "Explore advanced styling techniques, including typography, animations, transitions, and shadows.",
+//   ],
+//   sections: [],
+// };
 
-const mockSections: CourseSection[] = [
-  {
-    title: "HTML Basics - Structure and Semantics",
-    description:
-      "Learn the foundational elements of HTML, how to structure a web page using HTML tags, and the importance of semantic HTML for accessibility and SEO",
-    lessons: ["Introduction to HTML - The Building Blocks of the Web"],
-    quizzes: ["Introduction to HTML - The Building Blocks of the Web"],
-    exercises: ["A project name for example (?)"],
-  },
-  {
-    title: "HTML Basics - Structure and Semantics",
-    description:
-      "Learn the foundational elements of HTML, how to structure a web page using HTML tags, and the importance of semantic HTML for accessibility and SEO",
-    lessons: ["Introduction to HTML - The Building Blocks of the Web"],
-    quizzes: ["Introduction to HTML - The Building Blocks of the Web"],
-    exercises: ["A project name for example (?)"],
-  },
-  {
-    title: "HTML Basics - Structure and Semantics",
-    description:
-      "Learn the foundational elements of HTML, how to structure a web page using HTML tags, and the importance of semantic HTML for accessibility and SEO",
-    lessons: ["Introduction to HTML - The Building Blocks of the Web"],
-    quizzes: ["Introduction to HTML - The Building Blocks of the Web"],
-    exercises: ["A project name for example (?)"],
-  },
-  {
-    title: "HTML Basics - Structure and Semantics",
-    description:
-      "Learn the foundational elements of HTML, how to structure a web page using HTML tags, and the importance of semantic HTML for accessibility and SEO",
-    lessons: ["Introduction to HTML - The Building Blocks of the Web"],
-    quizzes: ["Introduction to HTML - The Building Blocks of the Web"],
-    exercises: ["A project name for example (?)"],
-  },
-];
+// const mockSections: CourseSection[] = [
+//   {
+//     title: "HTML Basics - Structure and Semantics",
+//     description:
+//       "Learn the foundational elements of HTML, how to structure a web page using HTML tags, and the importance of semantic HTML for accessibility and SEO",
+//     lessons: ["Introduction to HTML - The Building Blocks of the Web"],
+//     quizzes: ["Introduction to HTML - The Building Blocks of the Web"],
+//     exercises: ["A project name for example (?)"],
+//   },
+//   {
+//     title: "HTML Basics - Structure and Semantics",
+//     description:
+//       "Learn the foundational elements of HTML, how to structure a web page using HTML tags, and the importance of semantic HTML for accessibility and SEO",
+//     lessons: ["Introduction to HTML - The Building Blocks of the Web"],
+//     quizzes: ["Introduction to HTML - The Building Blocks of the Web"],
+//     exercises: ["A project name for example (?)"],
+//   },
+//   {
+//     title: "HTML Basics - Structure and Semantics",
+//     description:
+//       "Learn the foundational elements of HTML, how to structure a web page using HTML tags, and the importance of semantic HTML for accessibility and SEO",
+//     lessons: ["Introduction to HTML - The Building Blocks of the Web"],
+//     quizzes: ["Introduction to HTML - The Building Blocks of the Web"],
+//     exercises: ["A project name for example (?)"],
+//   },
+//   {
+//     title: "HTML Basics - Structure and Semantics",
+//     description:
+//       "Learn the foundational elements of HTML, how to structure a web page using HTML tags, and the importance of semantic HTML for accessibility and SEO",
+//     lessons: ["Introduction to HTML - The Building Blocks of the Web"],
+//     quizzes: ["Introduction to HTML - The Building Blocks of the Web"],
+//     exercises: ["A project name for example (?)"],
+//   },
+// ];
 
 export const Route = createFileRoute("/courses/$courseId")({
   component: CourseDetail,
 });
 
 function CourseDetail() {
-  const [hasEnrolled, setHasEnrolled] = useState<boolean>(false);
   const courseId = useParams({
     from: "/courses/$courseId",
     select: (params) => params.courseId,
   });
+  const [course, setCourse] = useState<Course | LearningPath>();
+  const [hasEnrolled, setHasEnrolled] = useState<boolean>(false);
+
+  useEffect(() => {
+    const fetchCourse = async () => {
+      try {
+        const courseResponse = await api.get(`/course/get/${courseId}`);
+        const courseData = courseResponse.data as Course ;
+        setCourse(prev => ({...courseData, }))
+      }
+      catch (e) {
+        console.log(e)
+      }
+    }
+    fetchCourse()
+  }, [])
   return (
-    <div className="min-h-dvh">
-      <CourseSection
-        course={mockCourse}
-        hasEnrolled={hasEnrolled}
-        setEnrollment={setHasEnrolled}
-      />
-      <div className="flex flex-col gap-6 px-double py-20">
-        {hasEnrolled && (
-          <>
-            <section className="flex flex-col gap-[1.625rem]">
-              <h2 className="text-[2rem] font-bold">Progress</h2>
-              <ProgressBar progressPercent={50} />
-            </section>
-            <section className="flex flex-col gap-6">
-              <h2 className="text-[2rem] font-bold">Current module</h2>
-              <SyllabusSection section={mockSections[0]} isLastSection={true} />
-            </section>
-          </>
-        )}
-        <section className="flex flex-col gap-2">
-          <h2 className="text-[2rem] font-bold">About this course</h2>
-          <p className="leading-card">{mockCourse.description}</p>
-        </section>
-        <section className="flex flex-col gap-2">
-          <h2 className="text-[2rem] font-bold">Skills you will gain</h2>
-          {mockCourse.skills.map((skill) => {
-            return (
-              <div className="flex items-center gap-2">
-                <img src="/assets/check.svg" alt="skill-check-icon" />
-                <p>{skill}</p>
-              </div>
-            );
-          })}
-        </section>
-        <h2 className="text-[2rem] font-bold">Syllabus</h2>
-        <Syllabus sections={mockSections} />
-        <div className="flex w-full justify-center">
-          {hasEnrolled ? (
-            <ResumeButton handleClick={() => setHasEnrolled(false)} />
-          ) : (
-            <EnrollButton handleClick={() => setHasEnrolled(true)} />
+    course && (
+      <div className="min-h-dvh">
+        <CourseSection
+          course={course}
+          hasEnrolled={hasEnrolled}
+          setEnrollment={setHasEnrolled}
+        />
+        <div className="flex flex-col gap-6 px-double py-20">
+          {hasEnrolled && (
+            <>
+              <section className="flex flex-col gap-[1.625rem]">
+                <h2 className="text-[2rem] font-bold">Progress</h2>
+                <ProgressBar progressPercent={50} />
+              </section>
+              <section className="flex flex-col gap-6">
+                <h2 className="text-[2rem] font-bold">Current module</h2>
+                {/* <SyllabusSection section={course} isLastSection={true} /> */}
+              </section>
+            </>
           )}
+          <section className="flex flex-col gap-2">
+            <h2 className="text-[2rem] font-bold">About this course</h2>
+            <p className="leading-card">{course.description}</p>
+          </section>
+          <section className="flex flex-col gap-2">
+            <h2 className="text-[2rem] font-bold">Skills you will gain</h2>
+            {(course as Course).whatYouWillLearn.map((skill) => {
+              return (
+                <div className="flex items-center gap-2">
+                  <img src="/assets/check.svg" alt="skill-check-icon" />
+                  <p>{skill}</p>
+                </div>
+              );
+            })}
+          </section>
+          <h2 className="text-[2rem] font-bold">Syllabus</h2>
+          {/* <Syllabus sections={course} /> */}
+          <div className="flex w-full justify-center">
+            {hasEnrolled ? (
+              <ResumeButton handleClick={() => setHasEnrolled(false)} />
+            ) : (
+              <EnrollButton handleClick={() => setHasEnrolled(true)} />
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    )
   );
 }

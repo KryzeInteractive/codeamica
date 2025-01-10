@@ -88,12 +88,12 @@ export function SyllabusSection({
           <div className="flex items-center gap-[2.375rem]">
             <img src="/assets/quiz.svg" alt="quiz-icon" />
             <p className="basis-1/12">Quiz</p>
-            <p>{section.quizzes[0]}</p>
+            {/* <p>{section.quizzes[0]}</p> */}
           </div>
           <div className="flex items-center gap-[2.375rem]">
             <img src="/assets/exercise.svg" alt="lesson-icon" />
             <p className="basis-1/12">Exercise</p>
-            <p>{section.exercises[0]}</p>
+            {/* <p>{section.exercises[0]}</p> */}
           </div>
         </section>
       )}

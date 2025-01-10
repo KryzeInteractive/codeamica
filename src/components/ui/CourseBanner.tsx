@@ -1,8 +1,9 @@
 import { CourseDetail } from "../../routes/courses/$courseId";
+import { Course, LearningPath } from "../../types";
 
-export default function CourseBanner({ course }: { course: CourseDetail }) {
+export default function CourseBanner({ course }: { course: Course | LearningPath }) {
   return (
-    <div className="w-infoSection absolute bottom-0 flex translate-y-1/2 items-center justify-between border border-black bg-white px-8 py-6 text-black">
+    <div className="absolute bottom-0 flex w-infoSection translate-y-1/2 items-center justify-between border border-black bg-white px-8 py-6 text-black">
       <div className="flex gap-2">
         <img
           src="/assets/skill-level.svg"
@@ -12,7 +13,7 @@ export default function CourseBanner({ course }: { course: CourseDetail }) {
         />
         <div>
           <span className="leading-card">Skill level</span>
-          <p className="text-2xl font-bold">{course.level}</p>
+          <p className="text-2xl font-bold">{(course as Course).level}</p>
         </div>
       </div>
       <div className="flex gap-2">
@@ -24,7 +25,9 @@ export default function CourseBanner({ course }: { course: CourseDetail }) {
         />
         <div>
           <span className="leading-card">Time to complete</span>
-          <p className="text-2xl font-bold">{course.duration}</p>
+          <p className="text-2xl font-bold">
+            {course.estimatedHours} {course.estimatedHours > 1 ? "hours" : "hour"}
+          </p>
         </div>
       </div>
       <div className="flex gap-2">
@@ -37,7 +40,7 @@ export default function CourseBanner({ course }: { course: CourseDetail }) {
         <div>
           <span className="leading-card">Prequisites</span>
           <p className="text-2xl font-bold">
-            {course.hasPrequisites ? "Prequisites here" : "None"}
+            {course.prequisites ? course.prequisites : "None"}
           </p>
         </div>
       </div>
