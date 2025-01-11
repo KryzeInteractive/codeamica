@@ -21,12 +21,11 @@ const maxNumberOfChars = 86;
 
 export default function CourseCard({id, type, level, title, description, estimatedHours }: CourseCardProps) {
     const navigate = useNavigate();
-    // console.log(id)
     return (
       <div className="relative flex h-card w-card shrink-0 cursor-pointer flex-col justify-between overflow-hidden rounded-[5px] border border-black bg-[var(--background)]"
       onClick={() => {
         navigate({
-          to: `/courses/${id}`
+          to: `/${type === "Course" ? "courses" : "roadmaps"}/${id}`
         })
       }}>
         <div
