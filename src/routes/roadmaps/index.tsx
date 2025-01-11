@@ -112,7 +112,7 @@ function Roadmaps() {
     <div className='h-fit grid grid-cols-4 justify-items-center gap-11 py-[4rem]'>
         {mockData.map(roadmap => {
             return (
-                <CourseCard id={roadmap.id} type={roadmap.type}  title={roadmap.title} description={roadmap.description} estimatedHours={roadmap.estimatedHours}/>
+                <CourseCard key={roadmap.id} id={roadmap.id} type={roadmap.type}  title={roadmap.title} description={roadmap.description} estimatedHours={roadmap.estimatedHours}/>
             )
         })}
     </div>

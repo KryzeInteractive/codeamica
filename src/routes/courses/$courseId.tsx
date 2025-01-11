@@ -148,9 +148,9 @@ function CourseDetail() {
           </section>
           <section className="flex flex-col gap-2">
             <h2 className="text-[2rem] font-bold">Skills you will gain</h2>
-            {(course as Course).whatYouWillLearn.map((skill) => {
+            {(course as Course).whatYouWillLearn.map((skill, index) => {
               return (
-                <div className="flex items-center gap-2">
+                <div key={index} className="flex items-center gap-2">
                   <img src="/assets/check.svg" alt="skill-check-icon" />
                   <p>{skill}</p>
                 </div>
