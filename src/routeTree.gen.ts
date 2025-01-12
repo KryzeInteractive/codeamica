@@ -12,7 +12,9 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as IndexImport } from './routes/index'
+import { Route as RoadmapsIndexImport } from './routes/roadmaps/index'
 import { Route as CoursesIndexImport } from './routes/courses/index'
+import { Route as RoadmapsRoadmapIdImport } from './routes/roadmaps/$roadmapId'
 import { Route as CoursesCourseIdImport } from './routes/courses/$courseId'
 
 // Create/Update Routes
@@ -23,9 +25,21 @@ const IndexRoute = IndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const RoadmapsIndexRoute = RoadmapsIndexImport.update({
+  id: '/roadmaps/',
+  path: '/roadmaps/',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const CoursesIndexRoute = CoursesIndexImport.update({
   id: '/courses/',
   path: '/courses/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const RoadmapsRoadmapIdRoute = RoadmapsRoadmapIdImport.update({
+  id: '/roadmaps/$roadmapId',
+  path: '/roadmaps/$roadmapId',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -53,11 +67,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CoursesCourseIdImport
       parentRoute: typeof rootRoute
     }
+    '/roadmaps/$roadmapId': {
+      id: '/roadmaps/$roadmapId'
+      path: '/roadmaps/$roadmapId'
+      fullPath: '/roadmaps/$roadmapId'
+      preLoaderRoute: typeof RoadmapsRoadmapIdImport
+      parentRoute: typeof rootRoute
+    }
     '/courses/': {
       id: '/courses/'
       path: '/courses'
       fullPath: '/courses'
       preLoaderRoute: typeof CoursesIndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/roadmaps/': {
+      id: '/roadmaps/'
+      path: '/roadmaps'
+      fullPath: '/roadmaps'
+      preLoaderRoute: typeof RoadmapsIndexImport
       parentRoute: typeof rootRoute
     }
   }
@@ -68,41 +96,67 @@ declare module '@tanstack/react-router' {
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/courses/$courseId': typeof CoursesCourseIdRoute
+  '/roadmaps/$roadmapId': typeof RoadmapsRoadmapIdRoute
   '/courses': typeof CoursesIndexRoute
+  '/roadmaps': typeof RoadmapsIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/courses/$courseId': typeof CoursesCourseIdRoute
+  '/roadmaps/$roadmapId': typeof RoadmapsRoadmapIdRoute
   '/courses': typeof CoursesIndexRoute
+  '/roadmaps': typeof RoadmapsIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/courses/$courseId': typeof CoursesCourseIdRoute
+  '/roadmaps/$roadmapId': typeof RoadmapsRoadmapIdRoute
   '/courses/': typeof CoursesIndexRoute
+  '/roadmaps/': typeof RoadmapsIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/courses/$courseId' | '/courses'
+  fullPaths:
+    | '/'
+    | '/courses/$courseId'
+    | '/roadmaps/$roadmapId'
+    | '/courses'
+    | '/roadmaps'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/courses/$courseId' | '/courses'
-  id: '__root__' | '/' | '/courses/$courseId' | '/courses/'
+  to:
+    | '/'
+    | '/courses/$courseId'
+    | '/roadmaps/$roadmapId'
+    | '/courses'
+    | '/roadmaps'
+  id:
+    | '__root__'
+    | '/'
+    | '/courses/$courseId'
+    | '/roadmaps/$roadmapId'
+    | '/courses/'
+    | '/roadmaps/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CoursesCourseIdRoute: typeof CoursesCourseIdRoute
+  RoadmapsRoadmapIdRoute: typeof RoadmapsRoadmapIdRoute
   CoursesIndexRoute: typeof CoursesIndexRoute
+  RoadmapsIndexRoute: typeof RoadmapsIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CoursesCourseIdRoute: CoursesCourseIdRoute,
+  RoadmapsRoadmapIdRoute: RoadmapsRoadmapIdRoute,
   CoursesIndexRoute: CoursesIndexRoute,
+  RoadmapsIndexRoute: RoadmapsIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -117,7 +171,9 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/courses/$courseId",
-        "/courses/"
+        "/roadmaps/$roadmapId",
+        "/courses/",
+        "/roadmaps/"
       ]
     },
     "/": {
@@ -126,8 +182,14 @@ export const routeTree = rootRoute
     "/courses/$courseId": {
       "filePath": "courses/$courseId.tsx"
     },
+    "/roadmaps/$roadmapId": {
+      "filePath": "roadmaps/$roadmapId.tsx"
+    },
     "/courses/": {
       "filePath": "courses/index.tsx"
+    },
+    "/roadmaps/": {
+      "filePath": "roadmaps/index.tsx"
     }
   }
 }

@@ -137,12 +137,9 @@ export default function LookAround({data}: {data: CourseCardProps[]}) {
         filter[key].length > 0 &&
         !filter[key].includes(data[key as keyof CourseCardProps])
       ) {
-        console.log(key)
         isValid = false;
       }
     });
-    console.log(isValid)
-    console.log(isValidDuration)
     return isValid && isValidDuration;
 
   };

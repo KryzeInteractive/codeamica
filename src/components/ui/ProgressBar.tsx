@@ -1,5 +1,4 @@
 export default function ProgressBar({progressPercent}: {progressPercent: number}) {
-    console.log(progressPercent)
     return (
       <div className="h-10 w-full rounded-[50px] border border-black bg-transparent">
         <span

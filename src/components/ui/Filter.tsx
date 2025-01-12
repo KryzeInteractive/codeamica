@@ -37,7 +37,7 @@ export default function Filter({
       };
     });
   };
-  console.log(filter)
+
   return (
     filter && (
       <div className="flex h-fit w-full flex-col gap-4 rounded-[5px] border-[1px] border-black p-6">

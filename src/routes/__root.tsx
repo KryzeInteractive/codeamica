@@ -7,13 +7,11 @@ export const Route = createRootRoute({
 });
 function RootComponent() {
   return (
-    <html lang="en">
-      <body>
+      <>
         <Navbar />
         <Outlet />
         <Footer />
         <TanStackRouterDevtools position="bottom-right" />
-      </body>
-    </html>
+      </>
   );
 }
