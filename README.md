@@ -11,14 +11,13 @@ Install bun.js runtime and CLI
 
 # Building
 ## Web app
-`bun build ./src/main.tsx --outdir ./dist`
+`bun run build`
 
 ## Mobile app
 
 ## Desktop app
-Step 1: Install rust: https://www.rust-lang.org/tools/install
-Step 2: build web first
-bun build ./src/main.tsx --outdir ./dist
+Step 1: Install rust if you don't do it yet: https://www.rust-lang.org/tools/install
+Step 2: Build web first
+`bun run build`
 Step 3: build desktop app
 `bunx tauri build`
-

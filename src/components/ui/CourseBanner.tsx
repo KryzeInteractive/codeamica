@@ -1,4 +1,4 @@
-import { CourseDetail } from "../../routes/courses/$courseId";
+//import { CourseDetail } from "../../routes/courses/$courseId";
 import { Course, LearningPath } from "../../types";
 
 export default function CourseBanner({ course }: { course: Course | LearningPath }) {
