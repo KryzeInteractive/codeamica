@@ -8,7 +8,7 @@ import {
 } from "../../components/ui/CourseDetailButton";
 import ProgressBar from "../../components/ui/ProgressBar";
 import { useEffect, useState } from "react";
-import { Course, LearningPath } from "../../types";
+import { Course } from "../../types";
 import api from "../../axios";
 
 export interface CourseDetail {
@@ -33,23 +33,33 @@ export interface CourseSection {
 }
 
 //Mock course data
-// const mockCourse: CourseDetail = {
-//   id: 0,
-//   type: "Course",
-//   title: "Responsive Web Design Essentials: HTML, CSS & JavaScript",
-//   level: "Intermediate",
-//   description:
-//     "Master the core skills needed to design visually appealing, responsive websites. This course covers HTML, CSS, and JavaScript fundamentals with a focus on modern, mobile-friendly design principles. You'll build practical projects along the way, learning to create layouts that look great on any device, with guidance on CSS Flexbox, Grid, and essential JavaScript for interactivity.",
-//   duration: "50 hours",
-//   hasPrequisites: false,
-//   skills: [
-//     "Build clean, semantic HTML5 markup to create accessible and SEO-friendly content.",
-//     "Understand the core concepts of JavaScript, including variables, data types, operators, and control structures.",
-//     "Implement fluid layouts and scalable images to maintain a visually appealing design on different devices.",
-//     "Explore advanced styling techniques, including typography, animations, transitions, and shadows.",
-//   ],
-//   sections: [],
-// };
+const mockCourse: Course = {
+  id: "0",
+  type: "Course",
+  title: "Responsive Web Design Essentials: HTML, CSS & JavaScript",
+  level: "Intermediate",
+  description:
+    "Master the core skills needed to design visually appealing, responsive websites. This course covers HTML, CSS, and JavaScript fundamentals with a focus on modern, mobile-friendly design principles. You'll build practical projects along the way, learning to create layouts that look great on any device, with guidance on CSS Flexbox, Grid, and essential JavaScript for interactivity.",
+  estimatedHours: 50,
+  prequisites: [],
+  whatYouWillLearn: [
+    "Build clean, semantic HTML5 markup to create accessible and SEO-friendly content.",
+    "Understand the core concepts of JavaScript, including variables, data types, operators, and control structures.",
+    "Implement fluid layouts and scalable images to maintain a visually appealing design on different devices.",
+    "Explore advanced styling techniques, including typography, animations, transitions, and shadows.",
+  ],
+  lessons: [],
+  category: "",
+  rating: 0,
+  studensEnrolled: 0,
+  instructors: [],
+  language: "",
+  aboutThisCourse: "",
+  version: 0,
+  lastUpdated: Date.prototype,
+  createdAt: Date.prototype,
+  updatedAt: Date.prototype,
+};
 
 // const mockSections: CourseSection[] = [
 //   {
@@ -95,7 +105,7 @@ function CourseDetail() {
     from: "/courses/$courseId",
     select: (params) => params.courseId,
   });
-  const [course, setCourse] = useState<Course | LearningPath>();
+  const [course, setCourse] = useState<Course>(mockCourse);
   const [hasEnrolled, setHasEnrolled] = useState<boolean>(false);
 
   useEffect(() => {
@@ -103,7 +113,7 @@ function CourseDetail() {
       try {
         const courseResponse = await api.get(`/course/get/${courseId}`);
         const courseData = courseResponse.data as Course ;
-        setCourse(prev => ({...courseData, }))
+        setCourse(({...courseData, }))
       }
       catch (e) {
         console.log(e)
@@ -138,9 +148,9 @@ function CourseDetail() {
           </section>
           <section className="flex flex-col gap-2">
             <h2 className="text-[2rem] font-bold">Skills you will gain</h2>
-            {(course as Course).whatYouWillLearn.map((skill) => {
+            {(course as Course).whatYouWillLearn.map((skill, index) => {
               return (
-                <div className="flex items-center gap-2">
+                <div key={index} className="flex items-center gap-2">
                   <img src="/assets/check.svg" alt="skill-check-icon" />
                   <p>{skill}</p>
                 </div>
