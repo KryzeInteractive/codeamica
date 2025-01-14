@@ -102,22 +102,24 @@ function FilterCategory({
   return (
     <section className="flex flex-col gap-2">
       <h3 className="font-bold leading-5 tracking-[0.25px]">{name}</h3>
-      {options.map((option, index) => {
-        return (
-          <div key={index} className="flex items-center gap-2">
-            <input
-              type="checkbox"
-              width="24"
-              height="24"
-              onChange={() => {
-                updateFilter(option);
-              }}
-              checked={pickedOptions.includes(option)}
-            />
-            <span>{option}</span>
-          </div>
-        );
-      })}
+      <div className="flex flex-wrap md:flex-col gap-x-6 gap-y-2 md:gap-2">
+        {options.map((option, index) => {
+          return (
+            <div key={index} className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                width="24"
+                height="24"
+                onChange={() => {
+                  updateFilter(option);
+                }}
+                checked={pickedOptions.includes(option)}
+              />
+              <span>{option}</span>
+            </div>
+          );
+        })}
+      </div>
     </section>
   );
 }
