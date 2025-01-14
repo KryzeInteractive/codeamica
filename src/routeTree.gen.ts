@@ -12,7 +12,9 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as IndexImport } from './routes/index'
+import { Route as SignUpIndexImport } from './routes/sign-up/index'
 import { Route as RoadmapsIndexImport } from './routes/roadmaps/index'
+import { Route as LoginIndexImport } from './routes/login/index'
 import { Route as CoursesIndexImport } from './routes/courses/index'
 import { Route as RoadmapsRoadmapIdImport } from './routes/roadmaps/$roadmapId'
 import { Route as CoursesCourseIdImport } from './routes/courses/$courseId'
@@ -25,9 +27,21 @@ const IndexRoute = IndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const SignUpIndexRoute = SignUpIndexImport.update({
+  id: '/sign-up/',
+  path: '/sign-up/',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const RoadmapsIndexRoute = RoadmapsIndexImport.update({
   id: '/roadmaps/',
   path: '/roadmaps/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const LoginIndexRoute = LoginIndexImport.update({
+  id: '/login/',
+  path: '/login/',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -81,11 +95,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CoursesIndexImport
       parentRoute: typeof rootRoute
     }
+    '/login/': {
+      id: '/login/'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginIndexImport
+      parentRoute: typeof rootRoute
+    }
     '/roadmaps/': {
       id: '/roadmaps/'
       path: '/roadmaps'
       fullPath: '/roadmaps'
       preLoaderRoute: typeof RoadmapsIndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/sign-up/': {
+      id: '/sign-up/'
+      path: '/sign-up'
+      fullPath: '/sign-up'
+      preLoaderRoute: typeof SignUpIndexImport
       parentRoute: typeof rootRoute
     }
   }
@@ -98,7 +126,9 @@ export interface FileRoutesByFullPath {
   '/courses/$courseId': typeof CoursesCourseIdRoute
   '/roadmaps/$roadmapId': typeof RoadmapsRoadmapIdRoute
   '/courses': typeof CoursesIndexRoute
+  '/login': typeof LoginIndexRoute
   '/roadmaps': typeof RoadmapsIndexRoute
+  '/sign-up': typeof SignUpIndexRoute
 }
 
 export interface FileRoutesByTo {
@@ -106,7 +136,9 @@ export interface FileRoutesByTo {
   '/courses/$courseId': typeof CoursesCourseIdRoute
   '/roadmaps/$roadmapId': typeof RoadmapsRoadmapIdRoute
   '/courses': typeof CoursesIndexRoute
+  '/login': typeof LoginIndexRoute
   '/roadmaps': typeof RoadmapsIndexRoute
+  '/sign-up': typeof SignUpIndexRoute
 }
 
 export interface FileRoutesById {
@@ -115,7 +147,9 @@ export interface FileRoutesById {
   '/courses/$courseId': typeof CoursesCourseIdRoute
   '/roadmaps/$roadmapId': typeof RoadmapsRoadmapIdRoute
   '/courses/': typeof CoursesIndexRoute
+  '/login/': typeof LoginIndexRoute
   '/roadmaps/': typeof RoadmapsIndexRoute
+  '/sign-up/': typeof SignUpIndexRoute
 }
 
 export interface FileRouteTypes {
@@ -125,21 +159,27 @@ export interface FileRouteTypes {
     | '/courses/$courseId'
     | '/roadmaps/$roadmapId'
     | '/courses'
+    | '/login'
     | '/roadmaps'
+    | '/sign-up'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/courses/$courseId'
     | '/roadmaps/$roadmapId'
     | '/courses'
+    | '/login'
     | '/roadmaps'
+    | '/sign-up'
   id:
     | '__root__'
     | '/'
     | '/courses/$courseId'
     | '/roadmaps/$roadmapId'
     | '/courses/'
+    | '/login/'
     | '/roadmaps/'
+    | '/sign-up/'
   fileRoutesById: FileRoutesById
 }
 
@@ -148,7 +188,9 @@ export interface RootRouteChildren {
   CoursesCourseIdRoute: typeof CoursesCourseIdRoute
   RoadmapsRoadmapIdRoute: typeof RoadmapsRoadmapIdRoute
   CoursesIndexRoute: typeof CoursesIndexRoute
+  LoginIndexRoute: typeof LoginIndexRoute
   RoadmapsIndexRoute: typeof RoadmapsIndexRoute
+  SignUpIndexRoute: typeof SignUpIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
@@ -156,7 +198,9 @@ const rootRouteChildren: RootRouteChildren = {
   CoursesCourseIdRoute: CoursesCourseIdRoute,
   RoadmapsRoadmapIdRoute: RoadmapsRoadmapIdRoute,
   CoursesIndexRoute: CoursesIndexRoute,
+  LoginIndexRoute: LoginIndexRoute,
   RoadmapsIndexRoute: RoadmapsIndexRoute,
+  SignUpIndexRoute: SignUpIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -173,7 +217,9 @@ export const routeTree = rootRoute
         "/courses/$courseId",
         "/roadmaps/$roadmapId",
         "/courses/",
-        "/roadmaps/"
+        "/login/",
+        "/roadmaps/",
+        "/sign-up/"
       ]
     },
     "/": {
@@ -188,8 +234,14 @@ export const routeTree = rootRoute
     "/courses/": {
       "filePath": "courses/index.tsx"
     },
+    "/login/": {
+      "filePath": "login/index.tsx"
+    },
     "/roadmaps/": {
       "filePath": "roadmaps/index.tsx"
+    },
+    "/sign-up/": {
+      "filePath": "sign-up/index.tsx"
     }
   }
 }
