@@ -1,7 +1,7 @@
 import { createFileRoute, useParams } from "@tanstack/react-router";
 import CourseSection from "../../components/course-details/CourseSection";
-import { SyllabusSection } from "../../components/course-details/SyllabusSection";
-import Syllabus from "../../components/course-details/SyllabusSection";
+//import { SyllabusSection } from "../../components/course-details/SyllabusSection";
+//import Syllabus from "../../components/course-details/SyllabusSection";
 import {
   EnrollButton,
   ResumeButton,
