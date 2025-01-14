@@ -22,25 +22,23 @@ export default function Navbar() {
 
   return (
     <nav className="flex max-h-[54px] w-full flex-row items-center justify-between p-2">
-      <div className="flex basis-2/5 flex-nowrap items-center gap-x-16">
+      <div className="flex basis-2/5 flex-nowrap items-center gap-x-12">
         <Link
           to="/"
-          className="flex items-center space-x-3 rtl:space-x-reverse"
+          className="flex items-center space-x-3 rtl:space-x-reverse flex-shrink-0"
         >
           <img
             src="/assets/logo.svg"
-            width={173}
-            height={24}
-            className="h-6 min-h-[24px] min-w-[173px]"
+            className="h-[20px] w-[130px] md:min-h-[24px] md:min-w-[173px]"
             alt="Codeamica Logo"
           />
         </Link>
-        <ul className="mt-4 flex flex-col rounded-lg border border-gray-100 bg-gray-50 p-4 font-medium md:mt-0 md:flex-row md:space-x-8 md:border-0 md:bg-white md:p-0 rtl:space-x-reverse">
+        <ul className="hidden font-medium md:mt-0 sm:flex flex-row gap-6">
           {navBarLink.map(({ href, label }) => (
             <li key={href}>
               <Link
                 to={href}
-                className={`${isActive(href) ? "font-bold underline" : "hover:font-bold hover:underline"} text-[var(--primary-text-color)]`}
+                className={`${isActive(href) ? "font-bold underline" : "hover:font-bold hover:underline"} text-[.55rem] md:text-[1rem] text-[var(--primary-text-color)]`}
                 aria-current={isActive(href) ? "page" : undefined}
               >
                 {label}
@@ -49,16 +47,28 @@ export default function Navbar() {
           ))}
         </ul>
       </div>
-      <div className="relative basis-2/5">
+      <div className="relative hidden basis-1/5 lg:basis-2/5 lg:block">
         <SearchBar onChange={() => {}} />
       </div>
-      <div className="flex items-center gap-6">
-        <button onClick={() => setLoginPopupOpen(true)} className="font-bold">
+      <div className="relative flex w-full basis-1/5 justify-start px-6 md:justify-start lg:hidden">
+        <img
+          width={24}
+          height={24}
+          src="/assets/search.svg"
+          alt="search-icon"
+          className="relative w-[1rem] h-[1rem] md:w-[24px] md:h-[24px]"
+        />
+      </div>
+      <div className="flex items-center justify-end gap-6 md:basis-auto">
+        <button
+          onClick={() => setLoginPopupOpen(true)}
+          className="text-[.55rem] font-bold md:text-[.75rem] lg:text-[1rem]"
+        >
           Log in
         </button>
         <button
           onClick={() => setSignupPopupOpen(true)}
-          className="max-h-fit rounded-[5px] bg-[var(--primary-text-color)] p-2 font-bold text-[var(--background)] underline"
+          className="max-h-fit rounded-[5px] bg-[var(--primary-text-color)] p-2 text-[.55rem] font-bold text-[var(--background)] underline md:text-[.75rem] lg:text-[1rem]"
         >
           Sign up
         </button>

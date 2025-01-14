@@ -10,6 +10,7 @@ import ProgressBar from "../../components/ui/ProgressBar";
 import { useEffect, useState } from "react";
 import { Course } from "../../types";
 import api from "../../axios";
+import CourseBanner from "../../components/ui/CourseBanner";
 
 export interface CourseDetail {
   id: number;
@@ -123,41 +124,58 @@ function CourseDetail() {
   }, [])
   return (
     course && (
-      <div className="min-h-dvh">
+      <div className="relative flex min-h-dvh w-full flex-col items-center">
         <CourseSection
           course={course}
           hasEnrolled={hasEnrolled}
           setEnrollment={setHasEnrolled}
         />
-        <div className="flex flex-col gap-6 px-double py-20">
+        <div className="block w-full md:hidden">
+          <CourseBanner course={course} />
+        </div>
+        <div className="flex flex-col gap-6 px-7 py-10 md:px-14 md:py-10 xl:px-double xl:py-20">
           {hasEnrolled && (
             <>
               <section className="flex flex-col gap-[1.625rem]">
-                <h2 className="text-[2rem] font-bold">Progress</h2>
+                <h2 className="text-[1.6rem] font-bold lg:text-[2rem]">
+                  Progress
+                </h2>
                 <ProgressBar progressPercent={50} />
               </section>
               <section className="flex flex-col gap-6">
-                <h2 className="text-[2rem] font-bold">Current module</h2>
+                <h2 className="text-[1.6rem] font-bold lg:text-[2rem]">
+                  Current module
+                </h2>
                 {/* <SyllabusSection section={course} isLastSection={true} /> */}
               </section>
             </>
           )}
           <section className="flex flex-col gap-2">
-            <h2 className="text-[2rem] font-bold">About this course</h2>
-            <p className="leading-card">{course.description}</p>
+            <h2 className="text-[1.6rem] font-bold lg:text-[2rem]">
+              About this course
+            </h2>
+            <p className="text-[.8rem] leading-card sm:text-[1rem]">
+              {course.description}
+            </p>
           </section>
           <section className="flex flex-col gap-2">
-            <h2 className="text-[2rem] font-bold">Skills you will gain</h2>
+            <h2 className="text-[1.6rem] font-bold lg:text-[2rem]">
+              Skills you will gain
+            </h2>
             {(course as Course).whatYouWillLearn.map((skill, index) => {
               return (
                 <div key={index} className="flex items-center gap-2">
-                  <img src="/assets/check.svg" alt="skill-check-icon" />
-                  <p>{skill}</p>
+                  <img
+                    src="/assets/check.svg"
+                    alt="skill-check-icon"
+                    className="sm:j-[30px] h-[26px] w-[26px] sm:w-[30px]"
+                  />
+                  <p className="text-[.8rem] sm:text-[1rem]">{skill}</p>
                 </div>
               );
             })}
           </section>
-          <h2 className="text-[2rem] font-bold">Syllabus</h2>
+          <h2 className="text-[1.6rem] font-bold lg:text-[2rem]">Syllabus</h2>
           {/* <Syllabus sections={course} /> */}
           <div className="flex w-full justify-center">
             {hasEnrolled ? (
