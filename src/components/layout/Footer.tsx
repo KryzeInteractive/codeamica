@@ -7,7 +7,7 @@ const footerLink = [
 ];
 export default function Footer() {
   return (
-    <footer className="px-default grid w-full select-none grid-cols-1 gap-6 bg-black py-10 text-white">
+    <footer className="px-5 md:px-default grid w-full select-none grid-cols-1 gap-6 bg-black py-10 text-white text-[.55rem] sm:text-[.6rem] md:text-[1rem]">
       <Link
         to="/"
         className="flex items-center space-x-3 rtl:space-x-reverse"
@@ -16,7 +16,7 @@ export default function Footer() {
           src="/assets/logo_footer.svg"
           width={218}
           height={30}
-          className="aspect-[7.27] h-[30px]"
+          className="aspect-[7.27] h-[22px] sm:h-[30px] w-[10rem]"
           alt="Codeamica Logo"
         />
       </Link>
