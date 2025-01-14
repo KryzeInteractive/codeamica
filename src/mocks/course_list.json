@@ -1,0 +1,58 @@
+[
+    {
+      "id": "1",
+      "type": "Course",
+      "level": "Beginner",
+      "title": "Mock course data",
+      "description": "No data received from API.",
+      "estimatedHours": 40
+    },
+    {
+      "id": "2",
+      "type": "Course",
+      "level": "Intermediate",
+      "title": "Mock course data",
+      "description": "No data received from API.",
+      "estimatedHours": 50
+    },
+    {
+      "id": "3",
+      "type": "Course",
+      "level": "Advanced",
+      "title": "Mock course data",
+      "description": "No data received from API.",
+      "estimatedHours": 20
+    },
+    {
+      "id": "4",
+      "type": "Learning Path",
+      "title": "Mock learning path data",
+      "description": "No data received from API.",
+      "estimatedHours": 80
+    },
+    {
+      "id": "5",
+      "type": "Course",
+      "level": "Advanced",
+      "title": "Mock course data",
+      "description": "No data received from API.",
+      "estimatedHours": 80
+    },
+    {
+      "id": "6",
+      "type": "Course",
+      "level": "Advanced",
+      "title": "Mock course data",
+      "description": "No data received from API.",
+      "estimatedHours": 80
+    },
+    {
+      "id": "7",
+      "type": "Course",
+      "level": "Advanced",
+      "title": "Mock course data",
+      "description": "No data received from API.",
+      "estimatedHours": 60
+    }
+]
+  
