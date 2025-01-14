@@ -109,7 +109,7 @@ const mockData: LearningPath[] = [
 ];
 function Roadmaps() {
   return (
-    <div className='h-fit grid grid-cols-4 justify-items-center gap-11 py-[4rem]'>
+    <div className='h-fit grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 justify-items-center gap-11 py-[4rem]'>
         {mockData.map(roadmap => {
             return (
                 <CourseCard key={roadmap.id} id={roadmap.id} type={roadmap.type}  title={roadmap.title} description={roadmap.description} estimatedHours={roadmap.estimatedHours}/>

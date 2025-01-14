@@ -145,10 +145,10 @@ export default function LookAround({data}: {data: CourseCardProps[]}) {
   };
 
   return (
-    <section className="w-full px-default pb-default">
+    <section className="w-full lg:px-default lg:pb-default px-10 pb-10">
       <h1 className="py-4 text-[2rem] font-bold text-black">Look around</h1>
-      <div className="custom-gap flex justify-between">
-        <div className="w-card">
+      <div className="custom-gap flex flex-col md:flex-row justify-normal xl:justify-between 2xl:justify-normal gap-9 md:gap-10 lg-gap-7 xl:gap-12">
+        <div className="w-full md:w-card flex-shrink-0">
           <Filter
             filter={filter}
             setFilter={setFilter}
@@ -156,7 +156,7 @@ export default function LookAround({data}: {data: CourseCardProps[]}) {
             onClear={onClear}
           />
         </div>
-        <section className="min-w-cardGrid flex w-fit flex-col gap-y-6">
+        <section className="xl:min-w-cardGrid w-full lg:w-fit flex flex-col gap-y-6">
           <div className="w-full">
             <SearchBar
               onChange={(term: string) => {
@@ -164,7 +164,7 @@ export default function LookAround({data}: {data: CourseCardProps[]}) {
               }}
             />
           </div>
-          <div className="grid w-fit min-w-fit grid-cols-3 gap-11">
+          <div className="justify-items-center grid xl:w-fit min-w-fit grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8 lg:gap-6 xl:gap-11 lg:justify-between">
             {courseData &&
               courseData.map((data) => {
                 return (
