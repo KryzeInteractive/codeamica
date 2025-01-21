@@ -8,11 +8,21 @@ export const Route = createFileRoute('/sign-up/')({
 function SignUp() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const goBack = () => {
+    window.history.back();
+  };
   return (
-    <main className="flex h-dvh w-dvw flex-col xl:flex-row">
-      <div className="hidden h-full w-full bg-sky-950 md:block"></div>
-      <div className="flex h-full w-full items-center justify-center">
-        <div className="flex w-[340px] flex-col justify-start gap-4 md:w-auto md:gap-6">
+    <main className="flex w-dvw flex-col xl:flex-row">
+      <div className="flex h-[calc(100dvh-54px)] w-full md:w-1/2 items-center justify-center">
+        <div className="relative flex w-[340px] flex-col justify-start gap-4 md:w-[25rem]">
+          <img
+            src="assets/close.svg"
+            alt="close-icon"
+            width={16}
+            height={16}
+            className="absolute right-0 top-2 cursor-pointer"
+            onClick={goBack}
+          />
           <span className="font-bold leading-card">Sign Up</span>
           <p className="leading-card">* Required field</p>
           <label
@@ -47,7 +57,7 @@ function SignUp() {
             <img
               src="assets/eye.svg"
               alt="eye"
-              className="input-svg-top absolute right-[10px] top-1/2"
+              className="input-svg-top absolute right-[10px] top-1/2 cursor-pointer"
             />
           </label>
           <label
@@ -72,18 +82,18 @@ function SignUp() {
             <img
               src="assets/eye.svg"
               alt="eye"
-              className="input-svg-top absolute right-[10px] top-1/2"
+              className="input-svg-top absolute right-[10px] top-1/2 cursor-pointer"
             />
           </label>
-          <button className="w-full rounded-[5px] bg-black px-0 py-2 text-center text-white md:px-40">
+          <button className="w-full rounded-[5px] bg-black px-0 py-2 text-center text-white">
             Sign Up
           </button>
           <hr className="w-full border-black" />
-          <button className="flex justify-center gap-3 rounded-[5px] border border-black px-0 py-2 font-bold leading-card md:px-40">
+          <button className="flex justify-center gap-3 rounded-[5px] border border-black px-0 py-2 font-bold leading-card">
             <img src="/assets/github-logo.svg" alt="github-logo" />
             Sign Up with Github
           </button>
-          <button className="flex justify-center gap-3 rounded-[5px] border border-black px-0 py-2 font-bold leading-card md:px-40">
+          <button className="flex justify-center gap-3 rounded-[5px] border border-black px-0 py-2 font-bold leading-card">
             <img src="/assets/google-logo.svg" alt="google-logo" />
             Sign Up with Google
           </button>
@@ -93,8 +103,19 @@ function SignUp() {
               Login
             </Link>
           </p>
+          <div className="mt-4 text-center">
+            <p className="leading-card">
+              By signing up, you agree to Codeamica’s
+            </p>
+            <p className="flex justify-center gap-2 leading-card">
+              <span className="font-bold underline">Terms of Service</span>
+              <span className="no-underline">&</span>
+              <span className="font-bold underline">Privacy Policy</span>
+            </p>
+          </div>
         </div>
       </div>
+      <div className="absolute right-0 top-0 hidden h-screen w-1/2 bg-sky-950 md:block"></div>
     </main>
   );  
 }
