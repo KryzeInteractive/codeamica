@@ -1,4 +1,4 @@
-import { CourseDetail } from "../../routes/courses/$courseId";
+//import { CourseDetail } from "../../routes/courses/$courseId";
 import { Course, LearningPath } from "../../types";
 import CourseBanner from "../ui/CourseBanner";
 import { EnrollButton, ResumeButton } from "../ui/CourseDetailButton";

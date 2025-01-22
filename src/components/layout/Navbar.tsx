@@ -1,19 +1,18 @@
-import { Link, useLocation } from "@tanstack/react-router";
+import { Link, useLocation, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import LoginPopup from "../LoginPopup";
 import SignupPopup from "../SignupPopup";
 import SearchBar from "../ui/SearchBar";
 
+const noDefaultLayoutRoutes = ["/login", "/sign-up"];
+const navBarLink = [
+  { href: "/", label: "Home" },
+  { href: "/roadmaps", label: "Roadmaps" },
+  { href: "/courses", label: "Courses" },
+];
+
 export default function Navbar() {
-  const [isLoginPopupOpen, setLoginPopupOpen] = useState(false);
-  const [isSignupPopupOpen, setSignupPopupOpen] = useState(false);
-
-  const navBarLink = [
-    { href: "/", label: "Home" },
-    { href: "/roadmaps", label: "Roadmaps" },
-    { href: "/courses", label: "Courses" },
-  ];
-
+  const navigate = useNavigate();
   const pathname = useLocation({
     select: (location) => location.pathname,
   });
@@ -25,7 +24,7 @@ export default function Navbar() {
       <div className="flex basis-2/5 flex-nowrap items-center gap-x-12">
         <Link
           to="/"
-          className="flex items-center space-x-3 rtl:space-x-reverse flex-shrink-0"
+          className="flex flex-shrink-0 items-center space-x-3 rtl:space-x-reverse"
         >
           <img
             src="/assets/logo.svg"
@@ -33,12 +32,12 @@ export default function Navbar() {
             alt="Codeamica Logo"
           />
         </Link>
-        <ul className="hidden font-medium md:mt-0 sm:flex flex-row gap-6">
+        <ul className="hidden flex-row gap-6 font-medium sm:flex md:mt-0">
           {navBarLink.map(({ href, label }) => (
             <li key={href}>
               <Link
                 to={href}
-                className={`${isActive(href) ? "font-bold underline" : "hover:font-bold hover:underline"} text-[.55rem] md:text-[1rem] text-[var(--primary-text-color)]`}
+                className={`${isActive(href) ? "font-bold underline" : "hover:font-bold hover:underline"} text-[.55rem] text-[var(--primary-text-color)] md:text-[1rem]`}
                 aria-current={isActive(href) ? "page" : undefined}
               >
                 {label}
@@ -47,42 +46,36 @@ export default function Navbar() {
           ))}
         </ul>
       </div>
-      <div className="relative hidden basis-1/5 lg:basis-2/5 lg:block">
-        <SearchBar onChange={() => {}} />
-      </div>
-      <div className="relative flex w-full basis-1/5 justify-start px-6 md:justify-start lg:hidden">
-        <img
-          width={24}
-          height={24}
-          src="/assets/search.svg"
-          alt="search-icon"
-          className="relative w-[1rem] h-[1rem] md:w-[24px] md:h-[24px]"
-        />
-      </div>
-      <div className="flex items-center justify-end gap-6 md:basis-auto">
-        <button
-          onClick={() => setLoginPopupOpen(true)}
-          className="text-[.55rem] font-bold md:text-[.75rem] lg:text-[1rem]"
-        >
-          Log in
-        </button>
-        <button
-          onClick={() => setSignupPopupOpen(true)}
-          className="max-h-fit rounded-[5px] bg-[var(--primary-text-color)] p-2 text-[.55rem] font-bold text-[var(--background)] underline md:text-[.75rem] lg:text-[1rem]"
-        >
-          Sign up
-        </button>
-      </div>
-
-      <LoginPopup
-        isOpen={isLoginPopupOpen}
-        onClose={() => setLoginPopupOpen(false)}
-      />
-
-      <SignupPopup
-        isOpen={isSignupPopupOpen}
-        onClose={() => setSignupPopupOpen(false)}
-      />
+      {!noDefaultLayoutRoutes.includes(pathname) && (
+        <>
+          <div className="relative hidden basis-1/5 lg:block lg:basis-2/5">
+            <SearchBar onChange={() => {}} />
+          </div>
+          <div className="relative flex w-full basis-1/5 justify-start px-6 md:justify-start lg:hidden">
+            <img
+              width={24}
+              height={24}
+              src="/assets/search.svg"
+              alt="search-icon"
+              className="relative h-[1rem] w-[1rem] md:h-[24px] md:w-[24px]"
+            />
+          </div>
+          <div className="flex items-center justify-end gap-6 md:basis-auto">
+            <button
+              onClick={() => navigate({ to: "/login" })}
+              className="text-[.55rem] font-bold md:text-[.75rem] lg:text-[1rem]"
+            >
+              Log in
+            </button>
+            <button
+              onClick={() => navigate({ to: "/sign-up" })}
+              className="max-h-fit rounded-[5px] bg-[var(--primary-text-color)] p-2 text-[.55rem] font-bold text-[var(--background)] underline md:text-[.75rem] lg:text-[1rem]"
+            >
+              Sign up
+            </button>
+          </div>
+        </>
+      )}
     </nav>
   );
 }

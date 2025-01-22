@@ -11,6 +11,7 @@
   --advanced-card-color: #ffaaaa;
   --roadmap-card-color: #000036;
   --yellow-btn-color: #ffcc00;
+  --light-gray: #9a9a9a;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -23,6 +24,11 @@ body {
   color: var(--primary-text-color);
   background: var(--background);
   font-family: "Space Mono", monospace;
+  height: 100dvh;
+}
+
+#root {
+  height: 100%;
 }
 
 /* check for different browser css */
@@ -90,4 +96,14 @@ input[type="checkbox"]:checked::after{
     background-position-y: center;
     border: 1px solid black;
 }
+
+.input-svg-top {
+  top: calc(50% + .25rem)
+}
+
+#home-icon path{
+  fill-opacity: 1;
+}
+
+
 
