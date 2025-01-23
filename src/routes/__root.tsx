@@ -12,7 +12,7 @@ function RootComponent() {
   const location = useLocation()
   return (
     <>
-      {!noDefaultLayoutRoutes.includes(location.pathname) && <Navbar />}
+      <Navbar />
       <Outlet />
       {!noDefaultLayoutRoutes.includes(location.pathname) && <Footer />}
       <TanStackRouterDevtools position="bottom-right" />

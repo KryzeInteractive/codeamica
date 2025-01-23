@@ -93,7 +93,7 @@ input[type="checkbox"]:checked::after{
 }
 
 .input-svg-top {
-  top: calc(50% + .25rem)
+  top: calc(25%)
 }
 
 

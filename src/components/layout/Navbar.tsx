@@ -1,23 +1,19 @@
 import { Link, useLocation, useNavigate } from "@tanstack/react-router";
-import { useState } from "react";
-import LoginPopup from "../LoginPopup";
-import SignupPopup from "../SignupPopup";
 import SearchBar from "../ui/SearchBar";
 
-export default function Navbar() {
-  const [isLoginPopupOpen, setLoginPopupOpen] = useState(false);
-  const [isSignupPopupOpen, setSignupPopupOpen] = useState(false);
-  const navigate = useNavigate();
-  const navBarLink = [
-    { href: "/", label: "Home" },
-    { href: "/roadmaps", label: "Roadmaps" },
-    { href: "/courses", label: "Courses" },
-  ];
+const noDefaultLayoutRoutes = ["/login", "/sign-up"];
+const navBarLink = [
+  { href: "/", label: "Home" },
+  { href: "/roadmaps", label: "Roadmaps" },
+  { href: "/courses", label: "Courses" },
+];
 
+export default function Navbar() {
+  const navigate = useNavigate();
   const pathname = useLocation({
     select: (location) => location.pathname,
   });
-  // Function to check if link is active
+
   const isActive = (href: string) => pathname === href;
 
   return (
@@ -47,42 +43,48 @@ export default function Navbar() {
           ))}
         </ul>
       </div>
-      <div className="relative hidden basis-1/5 lg:block lg:basis-2/5">
-        <SearchBar onChange={() => {}} />
-      </div>
-      <div className="relative flex w-full basis-1/5 justify-start px-6 md:justify-start lg:hidden">
-        <img
-          width={24}
-          height={24}
-          src="/assets/search.svg"
-          alt="search-icon"
-          className="relative h-[1rem] w-[1rem] md:h-[24px] md:w-[24px]"
-        />
-      </div>
-      <div className="flex items-center justify-end gap-6 md:basis-auto">
-        <button
-          onClick={() => navigate({ to: "/login" })}
-          className="text-[.55rem] font-bold md:text-[.75rem] lg:text-[1rem]"
-        >
-          Log in
-        </button>
-        <button
-          onClick={() => navigate({ to: "/sign-up" })}
-          className="max-h-fit rounded-[5px] bg-[var(--primary-text-color)] p-2 text-[.55rem] font-bold text-[var(--background)] underline md:text-[.75rem] lg:text-[1rem]"
-        >
-          Sign up
-        </button>
-      </div>
-
-      <LoginPopup
-        isOpen={isLoginPopupOpen}
-        onClose={() => setLoginPopupOpen(false)}
-      />
-
-      <SignupPopup
-        isOpen={isSignupPopupOpen}
-        onClose={() => setSignupPopupOpen(false)}
-      />
+      {!noDefaultLayoutRoutes.includes(pathname) && (
+        <>
+          <div className="relative hidden basis-1/5 lg:block lg:basis-2/5">
+            <SearchBar onChange={() => {}} />
+          </div>
+          <div className="relative flex w-full basis-1/5 justify-start px-6 md:justify-start lg:hidden">
+            <img
+              width={24}
+              height={24}
+              src="/assets/search.svg"
+              alt="search-icon"
+              className="relative h-[1rem] w-[1rem] md:h-[24px] md:w-[24px]"
+            />
+          </div>
+          <div className="flex items-center justify-end gap-6 md:basis-auto">
+            <button
+              onClick={() => navigate({ to: "/login" })}
+              className="text-[.55rem] font-bold md:text-[.75rem] lg:text-[1rem]"
+            >
+              Log in
+            </button>
+            <button
+              onClick={() => navigate({ to: "/sign-up" })}
+              className="max-h-fit rounded-[5px] bg-[var(--primary-text-color)] p-2 text-[.55rem] font-bold text-[var(--background)] underline md:text-[.75rem] lg:text-[1rem]"
+            >
+              Sign up
+            </button>
+          </div>
+          {/* <div className="flex w-full basis-1/5 justify-center gap-2">
+            <img
+              src="https://encycolorpedia.com/002395.png"
+              alt="user-avatar"
+              className="h-[25px] w-[25px] rounded-full"
+            />
+            <span className="font-bold leading-card">Hieu</span>
+            <img
+              src="assets/down-arrow.svg"
+              alt="dropdown-icon"
+            />
+          </div> */}
+        </>
+      )}
     </nav>
   );
 }
